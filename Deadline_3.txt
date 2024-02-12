@@ -1,0 +1,233 @@
+MySQL [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| med_plus           |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.014 sec)
+
+MySQL [(none)]> use med_plus;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MySQL [med_plus]> show tables;
++--------------------+
+| Tables_in_med_plus |
++--------------------+
+| Admins             |
+| Cart               |
+| Delivery           |
+| DeliveryAgent      |
+| Orders             |
+| Product            |
+| Users              |
+| Vendor             |
++--------------------+
+8 rows in set (0.207 sec)
+
+MySQL [med_plus]>
+
+SQL QUERIES :-
+
+
+DROP DATABASE IF EXISTS med_plus;
+
+CREATE DATABASE med_plus;
+
+USE med_plus;
+
+DROP TABLE IF EXISTS Product;
+
+CREATE TABLE Product (
+  ProductID INTEGER PRIMARY KEY AUTO_INCREMENT,
+  ProductName VARCHAR(50) NOT NULL,
+  Description VARCHAR(100),
+  Category VARCHAR(25),
+  Price DECIMAL(10,2) NOT NULL,
+  QuantityInStock INTEGER NOT NULL,
+  DateOfManufacture DATE,
+  DateOfExpiry DATE,
+  VendorID INTEGER REFERENCES Vendor(VendorID)
+);
+
+DROP TABLE IF EXISTS Orders;
+
+CREATE TABLE Orders (
+  OrderID INTEGER PRIMARY KEY AUTO_INCREMENT,
+  OrderDate DATE,
+  UserID INTEGER REFERENCES Users(UserID),
+  TotalAmount DECIMAL(10,2) NOT NULL,
+  Payment_Method ENUM('card', 'upi')
+);
+
+DROP TABLE IF EXISTS Delivery;
+
+CREATE TABLE Delivery (
+  DeliveryID INTEGER PRIMARY KEY AUTO_INCREMENT,
+  OrderID VARCHAR(20) REFERENCES Orders(OrderID),
+  DeliveryStatus ENUM('Packing', 'Out for Delivery', 'Delivered') NOT NULL DEFAULT 'Packing',
+  EstimatedDeliveryDate DATE
+);
+
+DROP TABLE IF EXISTS DeliveryAgent;
+
+CREATE TABLE DeliveryAgent (
+  AgentName VARCHAR(25) NOT NULL,
+  ContactInformation BIGINT UNIQUE,
+  DeliveryID INTEGER REFERENCES Delivery(DeliveryID),
+  Availability BOOLEAN NOT NULL,
+  Distance_Coverage DECIMAL(10,2) NOT NULL
+);
+
+DROP TABLE IF EXISTS Users;
+
+CREATE TABLE Users (
+  UserID INTEGER PRIMARY KEY AUTO_INCREMENT,
+  FirstName VARCHAR(25) NOT NULL,
+  LastName VARCHAR(25) NOT NULL,
+  Email VARCHAR(25) NOT NULL UNIQUE,
+  PWD VARCHAR(20) NOT NULL,
+  Address INTEGER,
+  Phone BIGINT UNIQUE,
+  DateOfBirth DATE,
+  Age INTEGER,
+  EmergencyPhone BIGINT,
+  BillingDetails ENUM('card', 'upi'),
+  FullName VARCHAR(50) AS (CONCAT(FirstName, ' ', LastName))
+);
+
+DROP TABLE IF EXISTS Vendor;
+
+CREATE TABLE Vendor (
+  VendorID INTEGER PRIMARY KEY AUTO_INCREMENT,
+  VendorName VARCHAR(25) NOT NULL,
+  PhoneNumber BIGINT,
+  Mail VARCHAR(50),
+  Address INTEGER,
+  AdminID INTEGER REFERENCES Admins(AdminID)
+);
+
+DROP TABLE IF EXISTS Admins;
+
+CREATE TABLE Admins (
+  AdminID INTEGER PRIMARY KEY AUTO_INCREMENT,
+  AdminName VARCHAR(20) NOT NULL,
+  Email VARCHAR(25) NOT NULL UNIQUE,
+  PWD VARCHAR(20) NOT NULL
+  CHECK(AdminID <=4)
+);
+
+DROP TABLE IF EXISTS Cart;
+
+CREATE TABLE Cart (
+  UserID INTEGER REFERENCES Users(UserID),
+  ProductID INTEGER REFERENCES Product(ProductID),
+  Quantity INTEGER
+);
+
+INSERT INTO Users (FirstName, LastName, Email, PWD, Address, Phone, DateOfBirth, Age, EmergencyPhone, BillingDetails)
+VALUES 
+('Ram', 'Krish', 'ra.kr@gmail.com', 'password123', '110020', 1234567891, '1990-05-15', 34, 9876543210, 'card'),
+('Harsh', 'Mistry', 'hrn.mi@gmail.com', 'password124', '110010', 1234567892, '1991-06-15', 34, 9876543211, 'upi'),
+('Muthuraj', 'Vairamuthu', 'mrv.vaidoe@gmail.com', 'password125', '110011', 1234567893, '1992-07-15', 34, 9876543212, 'upi'),
+('Bhargav', 'Rajan', 'bh.rajan@gmail.com', 'password126', '110013', 1234567894, '1993-05-15', 34, 9876543213, 'card'),
+('Pranav', 'Jain', 'pra.jain@gmail.com', 'password127', '110012', 1234567895, '1994-05-15', 34, 9876543214, 'upi'),
+('Brad', 'Pitt', 'br.pit@gmail.com', 'password128', '110014', 1234567896, '1995-08-15', 34, 9876543215, 'card'),
+('Tom', 'Cruise', 'tom.cr@gmail.com', 'password12910', '110015', 1234567897, '1996-05-15', 34, 9876543216, 'upi'),
+('Hrithik', 'Roshan', 'hr.rsh@gmail.com', 'password12911', '110016', 1234567898, '1997-09-15', 34, 9876543217, 'upi'),
+('Amir', 'Khan', 'amir.khan@gmail.com', 'password12912', '110016', 1234567899, '1998-10-15', 34, 9876543218, 'card'),
+('Vijay', 'Sharma', 'vjy.shrm@@gmail.com', 'password12913', '110017', 1234567890, '1999-11-15', 34, 9876543219, 'upi');
+
+INSERT INTO Vendor (VendorName, PhoneNumber, Mail, Address)
+VALUES 
+('LMN Pharmaceuticals', 3333444455, 'info@lmnpharma.com', '110011'),
+('JKL Medicals', 4444333322, 'info@jklpharma.com', '110012'),
+('MNO Healthcare', 5555666777, 'info@mnopharma.com', '110013'),
+('RST Remedies', 6666777888, 'info@rstpharma.com', '110014'),
+('UVW Pharma', 7777888999, 'info@uvwpharma.com', '110015'),
+('QRS Pharmaceuticals', 8888999900, 'info@qrspharma.com', '110016'),
+('XYZ Pharmaceuticals', 9999000011, 'info@xyzpharma.com', '110017'),
+('KMR Healthcare', 1234123456, 'info@kmrpharma.com', '110018'),
+('RRX Healthcare', 1234123467, 'info@rrxpharma.com', '110019'),
+('XXDS Healthcare', 1234123478, 'info@xxdspharma.com', '110020');
+
+INSERT INTO Product (ProductName, Description, Category, Price, QuantityInStock, DateOfManufacture, DateOfExpiry, VendorID) 
+VALUES 
+('Paracetamol', 'Pain reliever', 'Medicine', 10.99, 100, '2023-01-01', '2025-01-01', 1),
+('Bandages', 'Sterile bandages for wounds', 'Medical Supplies', 5.99, 200, '2022-12-01', '2024-12-01', 2),
+('Cotton Swabs', 'Sterile cotton swabs', 'Medical Supplies', 3.99, 150, '2023-03-15', '2025-03-15', 3),
+('Hydrogen Peroxide', 'Antiseptic solution', 'Medicine', 6.49, 120, '2023-02-28', '2025-02-28', 2),
+('Gauze Pads', 'Sterile gauze pads', 'Medical Supplies', 4.99, 180, '2023-04-20', '2025-04-20', 1),
+('Ibuprofen', 'Pain and fever relief', 'Medicine', 8.99, 90, '2023-01-10', '2024-12-31', 2),
+('Antiseptic Wipes', 'Disinfectant wipes', 'Medical Supplies', 7.29, 110, '2023-05-12', '2025-05-12', 3),
+('Cold Compress', 'Instant cold pack', 'Medical Supplies', 5.49, 160, '2023-06-25', '2025-06-25', 1),
+('Thermometer', 'Digital thermometer', 'Medical Equipment', 12.99, 80, '2023-07-30', '2025-07-30', 2),
+('Allergy Medication', 'Antihistamine tablets', 'Medicine', 9.49, 140, '2023-08-18', '2025-08-18', 3),
+('First Aid Kit', 'Basic first aid supplies', 'Medical Supplies', 15.99, 70, '2023-09-22', '2025-09-22', 1);
+
+INSERT INTO Orders (OrderDate, UserID, TotalAmount, Payment_Method)
+VALUES 
+('2024-02-12', 1, 40.56, 'card'),
+('2024-02-10', 2, 44.56, 'upi'),
+('2024-02-12', 3, 45.56, 'upi'),
+('2024-02-10', 4, 46.56, 'card'),
+('2024-02-12', 5, 47.56, 'upi'),
+('2024-02-10', 6, 48.56, 'card'),
+('2024-02-12', 7, 49.56, 'upi'),
+('2024-02-10', 8, 50.56, 'upi'),
+('2024-02-12', 9, 51.56, 'card'),
+('2024-02-10', 10, 52.98, 'upi');
+
+INSERT INTO DeliveryAgent (AgentName, ContactInformation, DeliveryID, Availability, Distance_Coverage)
+VALUES 
+('Laksh', 9998887770, 1, true, 10.25),
+('Sarath', 8887776660, 2, true, 15.00),
+('John', 7776665550, 3, false, 23.21),
+('Nimit', 6665554440, 4, false, 123.21),
+('Mike', 5554443330, 5, true, 92.92),
+('Jay', 4443332220, 6, true, 100.23),
+('Ryan', 3332221110, 7, false, 54.23),
+('Raj', 2221110000, 8, true, 67.82),
+('Jayyan', 1110009990, 9, true, 98.74),
+('Ashok', 1234567890, 10, true, 82.12);
+
+
+INSERT INTO Delivery (OrderID, DeliveryStatus, EstimatedDeliveryDate) 
+VALUES 
+('1', 'Out for Delivery', '2024-02-13'),
+('2', 'Packing', '2024-02-11'),
+('3', 'Packing', '2024-02-14'),
+('4', 'Delivered', '2024-02-10'),
+('5', 'Packing', '2024-02-15'),
+('6', 'Packing', '2024-02-12'),
+('7', 'Packing', '2024-02-14'),
+('8', 'Delivered', '2024-02-10'),
+('9', 'Packing', '2024-02-15'),
+('10', 'Packing', '2024-02-12');
+
+
+INSERT INTO Cart (UserID, ProductID, Quantity)
+VALUES 
+(1, 1, 2),
+(2, 2, 3),
+(3, 3, 3),
+(4, 4, 4),
+(5, 5, 5),
+(6, 3, 4),
+(7, 2, 3),
+(8, 6, 4),
+(9, 3, 2),
+(10, 7, 5);
+
+INSERT INTO Admins (AdminName, Email, PWD)
+VALUES
+('Bhargav', 'bhargav22135@iiitd.ac.in', 'password123'),
+('Pranav', 'pranav22365@iiitd.ac.in', 'password124'),
+('Muthuraj', 'muthuraj22307@iiitd.ac.in', 'password125'),
+('Harsh', 'harsh22200@iiitd.ac.in', 'password126');
+
