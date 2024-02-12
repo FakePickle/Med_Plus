@@ -41,7 +41,7 @@ DROP TABLE IF EXISTS DeliveryAgent;
 
 CREATE TABLE DeliveryAgent (
   AgentName VARCHAR(25) NOT NULL,
-  ContactInformation BIGINT,
+  ContactInformation BIGINT UNIQUE,
   DeliveryID INTEGER REFERENCES Delivery(DeliveryID),
   Availability BOOLEAN NOT NULL,
   Distance_Coverage DECIMAL(10,2) NOT NULL
@@ -56,7 +56,7 @@ CREATE TABLE Users (
   Email VARCHAR(25) NOT NULL UNIQUE,
   PWD VARCHAR(20) NOT NULL,
   Address INTEGER,
-  Phone BIGINT,
+  Phone BIGINT UNIQUE,
   DateOfBirth DATE,
   Age INTEGER,
   EmergencyPhone BIGINT,
@@ -82,6 +82,7 @@ CREATE TABLE Admins (
   AdminName VARCHAR(20) NOT NULL,
   Email VARCHAR(25) NOT NULL UNIQUE,
   PWD VARCHAR(20) NOT NULL
+  CHECK(AdminID <=4)
 );
 
 DROP TABLE IF EXISTS Cart;
