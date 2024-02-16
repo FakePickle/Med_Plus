@@ -17,6 +17,11 @@ function App() {
         >
           Learn React
         </a>
+        <form action="http://localhost:5000/api" method="post" encType="multipart/form-data">
+        First name:<input type="text" name = "first_name" /><br />
+        Last name:<input type="text" name = "last_name" />
+        <input type="submit" value="Submit" />
+        </form>
       </header>
     </div>
   );
