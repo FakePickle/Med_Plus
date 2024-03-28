@@ -17,23 +17,44 @@ const LoginSignup = () => {
                     <div className='text'>{action}</div>
                     <div className='underline'></div>
                 </div>
+                
+                    
                 <div className='inputs'>
+                <div className='google-input'>
+                    <img src={google} alt="Google Logo" className="google-logo" />
+                    Sign In With Google
+                    </div>
+                    <div className='or-use-email'>Or Use Email</div>
+                
                     {action === "Start Your Free Trial Today!" && (
                         <>
+                        <div className='input'>
+                        <input type="text" placeholder='First Name'/>
+                        </div>
+                        <div className='input'>
+                            <input type="text" placeholder='Last Name'/>
+                        </div>
+                        <div className='input'>
+                            <input type="number" placeholder='Age'/>
+                        </div>
+                        <div className='input'>
+                            <input type="tel" placeholder='Phone Number'/>
+                        </div>
                         </>
                     )}
-                    <div className='google-input'>
-    <img src={google} alt="Google Logo" className="google-logo" />
-    Sign In With Google
-</div>
-
-                    <div className='or-use-email'>Or Use Email</div>
                     <div className='input'>
                         <input type="email" placeholder='EMAIL'/>
                     </div>
                     <div className='input'>
                         <input type="password" placeholder='PASSWORD'/>
                     </div>
+
+
+                    {action === "Start Your Free Trial Today!" && (
+                    <div className='input'>
+                        <input type="password" placeholder='Confirm Password'/>
+                    </div>
+    )}
                 </div>
                 <div className='start-container'>
                     <div className='start'>START MY FREE TRIAL</div>

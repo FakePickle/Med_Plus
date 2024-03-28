@@ -77,7 +77,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: -30px auto 0;
+    margin: -20px auto 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -125,55 +125,62 @@
 }
 .terms-of-service {
     text-align: center;
-    color: #808080; /* Grey color */
-    font-size: 14px; /* Smaller font size */
-    margin-top: 10px; /* Adjust margin-top as needed */
+    color: #808080; 
+    font-size: 14px; 
+    margin-top: 10px; 
 }
 
 
 .logo-container {
     position: absolute;
-    top: 80px; /* Adjust the top margin to move the container downwards */
+    top: 80px; 
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    flex-direction: column; /* Arrange items vertically */
-    align-items: center; /* Center items horizontally */
-    z-index: 1; /* Ensure the logo appears above the main container */
+    flex-direction: column; 
+    align-items: center; 
+    z-index: 1; 
 }
 
 
 .logo {
-    width: 140px; /* Set width to 112px */
-    height: 90px; /* Set height to 76.75px */
+    width: 140px; 
+    height: 90px; 
 }
 
 .start-container {
     display: flex;
     justify-content: center;
-    margin-top: 20px; /* Adjust margin-top as needed */
+    margin-top: 20px;
 }
 
 .start {
-    width: 300px; /* Set width to 300px */
-    height: 20px; /* Set height to 66.8px */
+    width: 300px; 
+    height: 20px; 
     display: flex;
-    justify-content: center; /* Center text horizontally */
-    align-items: center; /* Center text vertically */
-    padding: 15px 30px; /* Add padding for better appearance */
-    background-color: #84BDC2; /* Set background color */
-    color: #fff; /* Set text color */
-    font-size: 18px; /* Set font size */
-    font-weight: bold; /* Set font weight */
-    border-radius: 5px; /* Add border radius for rounded corners */
-    cursor: pointer; /* Set cursor to pointer for interaction */
+    justify-content: center; 
+    align-items: center; 
+    padding: 15px 30px; 
+    background-color: #84BDC2;
+    color: #fff; 
+    font-size: 18px; 
+    font-weight: bold; 
+    border-radius: 5px; 
+    cursor: pointer; 
     margin-right: 0px;
 }
 
 
 .welcome-back {
-    font-size: 12px; /* Set font size */
+    font-size: 12px; 
     text-transform: uppercase; /* Convert text to uppercase */
-    color: #808080; /* Grey color */
-    margin-top: 5px; /* Adjust margin-top as needed */
+    color: #808080;
+    margin-top: 5px; 
+}
+
+
+
+.input input[type="number"],
+.input input[type="tel"] {
+    -moz-appearance: textfield; 
 }
