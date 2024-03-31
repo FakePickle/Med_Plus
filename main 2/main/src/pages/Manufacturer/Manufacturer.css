@@ -1,0 +1,188 @@
+* {
+    font-family: "Zen Kaku Gothic Antique", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-top: 200px;
+    width: 600px;
+    background: transparent;
+    padding-bottom: 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(30px);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.text {
+    color: #424242;
+    font-size: 31.25px;
+    font-weight: 700;
+    margin-left: 20px;
+}
+
+.underline {
+    width: 180px;
+    height: 6px;
+    background: #424242;
+    border-radius: 9px;
+}
+
+.inputs {
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 360px;
+    height: 66.8px;
+    background: #eaeaea;
+    border-radius: 20px;
+}
+
+.input input {
+    height: 80px;
+    width: 360px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #797979;
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+.google-input {
+    width: 360px;
+    height: 56px;
+    background: #e3f3fb;
+    border-radius: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -20px auto 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.google-logo {
+    width: 30px; /* Adjust the width of the logo as needed */
+    height: 30px; /* Adjust the height of the logo as needed */
+    margin-right: 10px; /* Add some spacing between the logo and the text */
+}
+
+.or-use-email {
+    text-align: center;
+    color: #616161;
+    font-size: 16px;
+    border-left: 100px solid #8CB4D2;
+    border-right: 100px solid #8CB4D2;
+    line-height: 0.1em;
+    margin: 20px auto; 
+}
+
+
+.submit-container {
+    display: flex;
+    gap: 30px;
+    margin: 60px auto;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: #fff;
+    background: #4c00b4;
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.gray {
+    background: #84BDC2;
+    color: #fff;
+}
+.terms-of-service {
+    text-align: center;
+    color: #808080; 
+    font-size: 14px; 
+    margin-top: 10px; 
+}
+
+
+.logo-container {
+    position: absolute;
+    top: 80px; 
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    z-index: 1; 
+}
+
+
+.logo {
+    width: 140px; 
+    height: 90px; 
+}
+
+.start-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.start {
+    width: 300px; 
+    height: 20px; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    padding: 15px 30px; 
+    background-color: #84BDC2;
+    color: #fff; 
+    font-size: 18px; 
+    font-weight: bold; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    margin-right: 0px;
+}
+
+
+.welcome-back {
+    font-size: 12px; 
+    text-transform: uppercase; /* Convert text to uppercase */
+    color: #808080;
+    margin-top: 5px; 
+}
+
+
+
+.input input[type="number"],
+.input input[type="tel"] {
+    -moz-appearance: textfield; 
+}

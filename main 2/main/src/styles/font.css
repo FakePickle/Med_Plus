@@ -1,0 +1,21 @@
+@font-face {
+  font-display: swap;
+  font-style: normal;
+  src: url("../../public/fonts/ZenKakuGothicAntiqueBlack.ttf");
+  font-family: "Zen Kaku Gothic Antique";
+  font-weight: 900;
+}
+@font-face {
+  font-display: swap;
+  font-style: normal;
+  src: url("../../public/fonts/ZenKakuGothicAntiqueBold.ttf");
+  font-family: "Zen Kaku Gothic Antique";
+  font-weight: 700;
+}
+@font-face {
+  font-display: swap;
+  font-style: normal;
+  src: url("../../public/fonts/VigaRegular.ttf");
+  font-family: "Viga";
+  font-weight: 400;
+}
