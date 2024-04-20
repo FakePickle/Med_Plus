@@ -4,16 +4,14 @@ from flask_mysqldb import MySQL
 app = Flask(__name__)
 
 # MySQL configurations
-app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_HOST'] = '192.168.43.7'
 app.config['MYSQL_USER'] = 'Med_Plus'
 app.config['MYSQL_PASSWORD'] = 'password'
 app.config['MYSQL_DB'] = 'med_plus'
 
 mysql = MySQL(app)
-
-# Secret key for session management
-app.secret_key = 'secret_key'
-
+# Secret key for session management app.secret_key = 'secret_key'
+app.secret_key = "secret_key"
 # Routes
 
 
@@ -32,7 +30,7 @@ def signup():
 
     cur = mysql.connection.cursor()
     cur.execute("INSERT INTO Users (FirstName, LastName, Email, PWD, Address, Phone, DateOfBirth, EmergencyPhone) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                (first_name, last_name, email, password, address, phone, dob, emergency_phone))
+                (first_name, last_name, email, password, address, int(phone), dob, emergency_phone))
     mysql.connection.commit()
     cur.close()
     return jsonify({"message": "Signup successful"})
@@ -52,7 +50,6 @@ def login():
     print(email, password, user)
     if user and user[5] == password:
         session['user_id'] = user[0]
-        print("User ID ", session['user_id'])
         return jsonify({"message": "Login successful"})
     else:
         return jsonify({"error": "Invalid email or password"}), 401
@@ -65,21 +62,17 @@ def logout():
     return jsonify({"message": "Logout successful"})
 
 
-# Place Order for User
-@app.route('/order', methods=['POST'])
-def place_order():
-    if 'user_id' not in session:
-        return jsonify({"error": "Unauthorized"}), 401
-
-    user_id = session['user_id']
-
-    cur = mysql.connection.cursor()
-    cur.callproc('order_cart', [user_id])
-    mysql.connection.commit()
-    cur.close()
-
-    return jsonify({"message": "Order placed successfully"})
-
+@app.route('/order_cart', methods=['POST'])
+def order_cart():
+    try:
+        user_id = request.json.get('user_id')
+        cur = mysql.connection.cursor()
+        cur.callproc('order_cart', [user_id])
+        mysql.connection.commit()
+        cur.close()
+        return jsonify({"message": "Order placed successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # Check Inventory for Vendor
 @app.route('/inventory', methods=['GET'])
@@ -140,8 +133,8 @@ def vendor_login():
 
 
 # Vendor Signup
-@app.route('/vendor/signup', methods=['POST'])
-def vendor_signup():
+@app.route('/admin/vendor_signup', methods=['POST'])
+def admin_vendor_singup():
     data = request.json
     vendor_name = data['VendorName']
     email = data['Email']

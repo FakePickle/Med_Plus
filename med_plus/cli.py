@@ -1,6 +1,5 @@
 import requests
 
-
 class SessionManager:
     def __init__(self):
         self.session = None
@@ -42,14 +41,14 @@ class SessionManager:
         }
         response = requests.post('http://localhost:5000/login', json=data)
         if response.status_code == 200:
-            self.session = response.cookies['user_session']
+            self.session = response.cookies['session']
             print("Login successful!")
         else:
             print("Error:", response.json().get('error', 'Unknown error'))
 
     def logout(self):
         print("=== User Logout ===")
-        response = requests.get('http://localhost:5000/logout', cookies={'user_session': self.session})
+        response = requests.get('http://localhost:5000/logout', cookies={'session': self.session})
         if response.status_code == 200:
             print("Logout successful!")
             self.session = None
@@ -60,7 +59,7 @@ class SessionManager:
         print("=== Place Order ===")
         item_name = input("Enter item name: ")
         data = {"ItemName": item_name}
-        response = requests.post('http://localhost:5000/order', json=data, cookies={'user_session': self.session})
+        response = requests.post('http://localhost:5000/order_cart', json=data, cookies={'session': self.session})
         if response.status_code == 200:
             print("Order placed successfully!")
         else:
@@ -69,10 +68,29 @@ class SessionManager:
     def check_inventory(self):
         print("=== Check Inventory ===")
         item_name = input("Enter item name: ")
-        response = requests.get('http://localhost:5000/inventory', params={"item_name": item_name}, cookies={'vendor_session': self.session})
+        response = requests.get('http://localhost:5000/inventory', params={"item_name": item_name}, cookies={'session': self.session})
         if response.status_code == 200:
             quantity = response.json().get('quantity')
             print(f"Available quantity of {item_name}: {quantity}")
+        else:
+            print("Error:", response.json().get('error', 'Unknown error'))
+
+    def vendor_signup(self):
+        print("=== Vendor Signup ===")
+        vendor_name = input("Enter vendor name: ")
+        email = input("Enter email: ")
+        password = input("Enter password: ")
+        phone = input("Enter phone: ")
+
+        data = {
+            "VendorName": vendor_name,
+            "Email": email,
+            "Password": password,
+            "PhoneNumber": phone
+        }
+        response = requests.post('http://localhost:5000/vendor/signup', json=data)
+        if response.status_code == 200:
+            print("Vendor signup successful!")
         else:
             print("Error:", response.json().get('error', 'Unknown error'))
 
@@ -86,40 +104,10 @@ class SessionManager:
         }
         response = requests.post('http://localhost:5000/vendor/login', json=data)
         if response.status_code == 200:
-            self.session = response.cookies['vendor_session']
+            self.session = response.cookies['session']
             print("Vendor login successful!")
         else:
             print("Error:", response.json().get('error', 'Unknown error'))
-    
-    def admin_login(self):
-        print("=== Admin Login ===")
-        email = input("Enter email: ")
-        password = input("Enter password: ")
-        data = {
-            "Email": email,
-			"Password": password
-		}
-        response = requests.post('http://localhost:5000/admin/login', json=data)
-        if response.status_code == 200:
-            self.session = response.cookies['admin_session']
-            print("Admin login successful!")
-        else:
-            print("Error:", response.json().get('error', 'Unknown error'))
-            
-    def vendor_add(self):
-        print("=== Vendor Add ===")
-        vendorname = input("Enter vendor name: ")
-        password = input("Enter password: ")
-        phone = int(input("Enter phone: "))
-        email = input("Enter email: ")
-        address = input("Enter address: ")
-        data = {
-			"VendorName": vendorname,
-			"Password": password,
-			"Phone": phone,
-			"Email": email,
-			"Address": address
-		}
 
 
 def main():
@@ -149,6 +137,8 @@ def main():
         elif choice == "5":
             session_manager.check_inventory()
         elif choice == "6":
+            session_manager.vendor_signup()
+        elif choice == "7":
             session_manager.vendor_login()
         elif choice == "8":
             break
@@ -158,3 +148,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
