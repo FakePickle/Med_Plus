@@ -16,6 +16,7 @@ app.secret_key = 'secret_key'
 
 # Routes
 
+
 # User Signup
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -36,6 +37,7 @@ def signup():
     cur.close()
     return jsonify({"message": "Signup successful"})
 
+
 # User Login
 @app.route('/login', methods=['POST'])
 def login():
@@ -55,11 +57,13 @@ def login():
     else:
         return jsonify({"error": "Invalid email or password"}), 401
 
+
 # User Logout
 @app.route('/logout', methods=['GET'])
 def logout():
     session.pop('user_id', None)
     return jsonify({"message": "Logout successful"})
+
 
 # Place Order for User
 @app.route('/order', methods=['POST'])
@@ -75,6 +79,7 @@ def place_order():
     cur.close()
 
     return jsonify({"message": "Order placed successfully"})
+
 
 # Check Inventory for Vendor
 @app.route('/inventory', methods=['GET'])
@@ -95,6 +100,7 @@ def check_inventory():
     else:
         return jsonify({"error": "Item not found in inventory"}), 404
 
+
 # Admin Login
 @app.route('/admin/login', methods=['POST'])
 def admin_login():
@@ -112,6 +118,7 @@ def admin_login():
         return jsonify({"message": "Admin login successful"})
     else:
         return jsonify({"error": "Invalid email or password"}), 401
+
 
 # Vendor Login
 @app.route('/vendor/login', methods=['POST'])
@@ -131,6 +138,7 @@ def vendor_login():
     else:
         return jsonify({"error": "Invalid email or password"}), 401
 
+
 # Vendor Signup
 @app.route('/vendor/signup', methods=['POST'])
 def vendor_signup():
@@ -147,6 +155,7 @@ def vendor_signup():
     cur.close()
 
     return jsonify({"message": "Vendor signup successful"})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
